@@ -11,5 +11,9 @@ describe("main", function () {
       assert.strictEqual(main.getExtension("Community S01E04.mp4"), "mp4");
       done();
     });
+    it("should return correct extension in filenames with multiple dots", function (done) {
+      assert.strictEqual(main.getExtension("Community.S01E04.mp4"), "mp4");
+      done();
+    });
   });
 });
