@@ -26,5 +26,10 @@ describe("main", function () {
       assert.strictEqual(result.show, "Community");
       done();
     });
+    it("should return object with show in title case", function (done) {
+      var result = main.getInfoFromFilename("community S01E04.mp4");
+      assert.strictEqual(result.show, "Community");
+      done();
+    });
   });
 });

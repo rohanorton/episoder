@@ -14,5 +14,6 @@
     "jslint": "0.3.x"
   },
   "dependencies": {
+    "to-title-case": "0.1.x"
   }
 }
