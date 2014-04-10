@@ -7,11 +7,11 @@ var main = require("../lib/main.js"),
 
 describe("main", function () {
   describe("getExtension()", function () {
-    it("should return correct extension", function (done) {
+    it("should return correct extension from filename", function (done) {
       assert.strictEqual(main.getExtension("Community S01E04.mp4"), "mp4");
       done();
     });
-    it("should return correct extension in filenames with multiple dots", function (done) {
+    it("should return correct extension from filenames with multiple dots", function (done) {
       assert.strictEqual(main.getExtension("Community.S01E04.mp4"), "mp4");
       done();
     });
@@ -75,6 +75,41 @@ describe("main", function () {
       assert.strictEqual(result.episode, 4, "episode should be 4");
       done();
     });
-
+  });
+  describe("getTitle()", function () {
+    it("should return correct title", function (done) {
+      var episodeObj = {
+        show: "Community",
+        season: 1,
+        episode: 4
+      };
+      main.getTitle(episodeObj, function (err, res) {
+        assert(!err, "Should not error");
+        assert.strictEqual(res.title, "Social Psychology");
+        done();
+      });
+    });
+    it("should error when given wrong episode information", function (done) {
+      var episodeObj = {
+        show: "someshowthatdoesntexist",
+        season: 99,
+        episode: 99
+      };
+      main.getTitle(episodeObj, function (err) {
+        assert(err, "Should error");
+        done();
+      });
+    });
+    it("should error when given bad episode information", function (done) {
+      var episodeObj = {
+        show: undefined,
+        season: undefined,
+        episode: undefined
+      };
+      main.getTitle(episodeObj, function (err) {
+        assert(err, "Should error");
+        done();
+      });
+    });
   });
 });
