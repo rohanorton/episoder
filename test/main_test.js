@@ -21,14 +21,30 @@ describe("main", function () {
     });
   });
   describe("getInfoFromFilename()", function () {
-    it("should return object with show", function (done) {
-      var result = main.getInfoFromFilename("Community S01E04.mp4");
-      assert.strictEqual(result.show, "Community");
+    it("should return object with show in title case", function (done) {
+      var result = main.getInfoFromFilename("parks and recreation S01E04.mp4");
+      assert.strictEqual(result.show, "Parks and Recreation");
       done();
     });
-    it("should return object with show in title case", function (done) {
-      var result = main.getInfoFromFilename("community S01E04.mp4");
-      assert.strictEqual(result.show, "Community");
+    it("should return object with show, season and episode numbers from filename in S##E## form", function (done) {
+      var result = main.getInfoFromFilename("Community S01E04.mp4");
+      assert.strictEqual(result.show, "Community", "show should be 'Community'");
+      assert.strictEqual(result.season, 1, "season should be 1");
+      assert.strictEqual(result.episode, 4, "episode should be 4");
+      done();
+    });
+    it("should return object with show, season and episode numbers from filename in s##e## form", function (done) {
+      var result = main.getInfoFromFilename("community s01e04.mp4");
+      assert.strictEqual(result.show, "Community", "show should be 'Community'");
+      assert.strictEqual(result.season, 1, "season should be 1");
+      assert.strictEqual(result.episode, 4, "episode should be 4");
+      done();
+    });
+    it("should return object with show, season and episode numbers from filename in #x## form", function (done) {
+      var result = main.getInfoFromFilename("community 1x04.mp4");
+      assert.strictEqual(result.show, "Community", "show should be 'Community'");
+      assert.strictEqual(result.season, 1, "season should be 1");
+      assert.strictEqual(result.episode, 4, "episode should be 4");
       done();
     });
   });
