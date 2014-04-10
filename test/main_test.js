@@ -6,9 +6,9 @@ var main = require("../lib/main.js"),
   assert = require("assert");
 
 describe("main", function () {
-  describe("hello()", function () {
-    it("should return 'hello world'", function (done) {
-      assert.equal(main.hello(), "hello world");
+  describe("getExtension()", function () {
+    it("should return correct extension", function (done) {
+      assert.strictEqual(main.getExtension("Community S01E04.mp4"), "mp4");
       done();
     });
   });
