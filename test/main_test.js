@@ -15,5 +15,9 @@ describe("main", function () {
       assert.strictEqual(main.getExtension("Community.S01E04.mp4"), "mp4");
       done();
     });
+    it("should return lowercase extension", function (done) {
+      assert.strictEqual(main.getExtension("COMMUNITY S01E04.MP4"), "mp4");
+      done();
+    });
   });
 });
