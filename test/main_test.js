@@ -21,9 +21,10 @@ describe("main", function () {
     });
   });
   describe("getInfoFromFilename()", function () {
-    it("should return object with show, season, and episode", function (done) {
+    it("should return object with show", function (done) {
       var result = main.getInfoFromFilename("Community S01E04.mp4");
       assert.strictEqual(result.show, "Community");
+      done();
     });
   });
 });
