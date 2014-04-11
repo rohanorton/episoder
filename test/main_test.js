@@ -52,6 +52,14 @@ describe("main", function () {
       assert.strictEqual(result.extension, "mp4", "extension should be mp4");
       done();
     });
+    it("should return object with show, season and episode numbers from filename in 'Season # Episode ##' form", function (done) {
+      var result = main.getInfoFromFilename("Community Season 1 Episode 4.mp4");
+      assert.strictEqual(result.show, "Community", "show should be 'Community'");
+      assert.strictEqual(result.season, 1, "season should be 1");
+      assert.strictEqual(result.episode, 4, "episode should be 4");
+      assert.strictEqual(result.extension, "mp4", "extension should be mp4");
+      done();
+    });
     it("should return object with show, season and episode numbers from filename in ### form", function (done) {
       var result = main.getInfoFromFilename("Community 104.mp4");
       assert.strictEqual(result.show, "Community", "show should be 'Community'");
