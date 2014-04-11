@@ -11,7 +11,8 @@
   "private": true,
   "devDependencies": {
     "mocha": "1.18.x",
-    "jslint": "0.3.x"
+    "jslint": "0.3.x",
+    "mock-fs": "2.2.x"
   },
   "dependencies": {
     "to-title-case": "0.1.x"

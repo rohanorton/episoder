@@ -3,7 +3,9 @@
 "use strict";
 
 var main = require("../lib/main.js"),
-  assert = require("assert");
+  assert = require("assert"),
+  fs = require("fs"),
+  mock = require("mock-fs");
 
 describe("main", function () {
   describe("getExtension()", function () {
@@ -135,6 +137,21 @@ describe("main", function () {
         assert(!err, "Should not error");
         assert.strictEqual(replacementFilename, "Community - S01E04 - Social Psychology.mp4");
         done();
+      });
+    });
+  });
+  describe("renameEpisodeFile()", function () {
+    it("should rename episode file", function (done) {
+      // create mock filesystem to test on...
+      mock({
+        "community s01e04.mp4": "An episode of Community"
+      });
+      main.renameEpisodeFile("community s01e04.mp4", function () {
+        fs.readdir(".", function (err, filelist) {
+          assert(!err, "should not error");
+          assert.strictEqual(filelist[0], "Community - S01E04 - Social Psychology.mp4");
+          done();
+        });
       });
     });
   });
