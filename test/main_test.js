@@ -162,5 +162,22 @@ describe("main", function () {
         });
       });
     });
+    it("should rename episode file in a different directory", function (done) {
+      // create mock filesystem to test on...
+      mock({
+        "another_dir": {
+          "sub_dir": {
+            "community s01e04.mp4": "An episode of Community"
+          }
+        }
+      });
+      main.renameEpisodeFile("another_dir/sub_dir/community s01e04.mp4", function () {
+        fs.readdir("another_dir/sub_dir/", function (err, filelist) {
+          assert(!err, "should not error");
+          assert.strictEqual(filelist[0], "Community - S01E04 - Social Psychology.mp4");
+          done();
+        });
+      });
+    });
   });
 });
