@@ -19,6 +19,8 @@
     "mock-fs": "2.2.x"
   },
   "dependencies": {
-    "to-title-case": "0.1.x"
+    "to-title-case": "0.1.x",
+    "glob": "^3.2.9",
+    "bluebird": "^1.2.2"
   }
 }

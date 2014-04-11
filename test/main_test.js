@@ -144,4 +144,40 @@ describe("main.js", function () {
       });
     });
   });
+  describe("main()", function () {
+    it("should rename file given filename", function (done) {
+      // create mock filesystem to test on...
+      mock({
+        "community s01e04.mp4": "An episode of Community"
+      });
+      main.main("community s01e04.mp4", function () {
+        fs.readdir(".", function (err, filelist) {
+          assert(!err, "should not error");
+          assert.strictEqual(filelist[0], "Community - S01E04 - Social Psychology.mp4");
+          done();
+        });
+      });
+    });
+    it("should rename globbed files", function (done) {
+      // create mock filesystem to test on...
+      mock({
+        "another_dir": {
+          "community s01e01.mp4": "An episode of Community",
+          "community s01e02.mp4": "An episode of Community",
+          "community s01e03.mp4": "An episode of Community",
+          "community s01e04.mp4": "An episode of Community",
+          "community s01e04.txt": "An episode of Community"
+        }
+      });
+      main.main("another_dir/*mp4", function () {
+        fs.readdir("another_dir/", function (err, filelist) {
+          assert(!err, "should not error");
+          assert.strictEqual(filelist[0], "Community - S01E01 - Pilot.mp4", "Should change specified files");
+          assert.strictEqual(filelist[3], "Community - S01E04 - Social Psychology.mp4", "Should change specified files");
+          assert.strictEqual(filelist[4], "community s01e04.txt", "Shouldn't change unspecified files");
+          done();
+        });
+      });
+    });
+  });
 });
