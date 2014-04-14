@@ -1,28 +1,93 @@
 Episoder
 ========
 
-A program for renaming the files of downloaded tv shows.
+A node.js commandline utility for renaming the files of downloaded TV shows.
 
-It doesn't do anything yet, but eventually...
+This program extracts showname, season and episode infomation from a filename or
+from user flags and queries the trakt.tv api to get episode title.
 
-- It should extract episode information from the filename
-- If not enough information in filenames it should request user input
-- It should use the trakt.tv api to get episode titles.
-- Finally it should rename the original file with the information.
-- It should also be possible to provide args to set global variables such as
-show name and season.
-- It should be able to get episode infomation for filenames in the following
-forms:
-  - Community S01E04.mp4
-  - Community 1x04.mp4
-  - Community 104.mp4
-  - Community Season 1 Episode 4.mp4
-- And rename them to:
-  - Community - S01E04 - Social Psychology.mp4
+Currently only renames in the form `Community - S01E04 - Social Psychology.mp4`
 
+It should work as a node.js module too, but I haven't really played with it
+beyond writing tests. Exposed methods documented below.
 
+For example, it is able to rename the following filenames:
+
+- Community_S01E04.mp4
+- Community-1x04.mp4
+- Community.104.mp4
+- Community - Season 1 Episode 4.mp4
+  
+(amongst others) to:
+
+- Community - S01E04 - Social Psychology.mp4
+
+Installation
+------------
+
+Requirements:
+- node.js
+- npm (usually installed with node.js)
+
+```bash
+git clone https://github.com/rohanorton/episoder.git
+cd episoder/
+npm install
+sudo npm link
+```
 You will need to get your own Trakt API key from their website. And create a
 traktApiKey.js file in the config folder containing the following:
 
-`module.exports = "your-trakt-api-key-goes-here";`
+```javascript
+module.exports = "your-trakt-api-key-goes-here";
+```
+
+Eventually I'll get round to registering it as an npm module so that you can
+simply install it through that, but until then this method of installation will
+have to suffice
+
+Usage
+-----
+
+Basic usage:
+
+```bash
+episoder community-S01E04-ExampleBlagh.mp4
+```
+
+will rename the file `Community - S01E04 - Social Psychology.mp4`.
+
+In true unix fashion it accepts globbed filenames:
+
+```bash
+episoder *
+```
+
+### Show flag
+The `--show` flag will set a user defined show. If multiple words, please use
+quotation as per the example
+
+Set custom showname:
+
+```bash
+episoder --show "parks and recreation" s01e04.avi
+```
+
+renames to `Parks and Recreation - S01E04 - Boys Club.avi`
+
+
+### Offset flag
+
+Sometimes the episode info from a filename doesn't quite match up with what's in
+the trakt.tv database. For example, sometimes pilot episodes are referred to as
+episode 0 (like in the example) but trakt starts the numbering from 1. If this
+is the case we can pass an offset value to correct the output.
+
+Set episode offset:
+
+```bash
+episoder --offset 1 twin_peaks-1x00-pilot.mkv
+```
+
+Renames to `Twin Peaks - S01E01 - Pilot.mkv`.
 
