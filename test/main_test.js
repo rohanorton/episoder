@@ -1,4 +1,4 @@
-/*jslint indent:2, node:true */
+/*jslint indent:2, node:true, nomen:true */
 /*globals describe, it */
 "use strict";
 
@@ -108,6 +108,11 @@ describe("main.js", function () {
       assert.strictEqual(result.extension, "mp4", "extension should be mp4");
       done();
     });
+    it("should return null when filename doesn't match any patterns", function (done) {
+      var result = main.parseFilename("this-is-a-really-useless-file-dontcha-think");
+      assert.strictEqual(result, null);
+      done();
+    });
   });
   describe("zPad()", function () {
     it("should return zero padded number string for single digit numbers", function (done) {
@@ -162,11 +167,12 @@ describe("main.js", function () {
   });
   describe("main()", function () {
     it("should rename file given filename", function (done) {
+      var args = { _: ["community s01e04.mp4"] };
       // create mock filesystem to test on...
       mock({
         "community s01e04.mp4": "An episode of Community"
       });
-      main.main("community s01e04.mp4", function () {
+      main.main(args, function () {
         fs.readdir(".", function (err, filelist) {
           assert(!err, "should not error");
           assert.strictEqual(filelist[0], "Community - S01E04 - Social Psychology.mp4");
@@ -175,6 +181,7 @@ describe("main.js", function () {
       });
     });
     it("should rename globbed files", function (done) {
+      var args = { _: ["another_dir/*mp4"] };
       // create mock filesystem to test on...
       mock({
         "another_dir": {
@@ -185,7 +192,7 @@ describe("main.js", function () {
           "community s01e04.txt": "An episode of Community"
         }
       });
-      main.main("another_dir/*mp4", function () {
+      main.main(args, function () {
         fs.readdir("another_dir/", function (err, filelist) {
           assert(!err, "should not error");
           assert.strictEqual(filelist[0], "Community - S01E01 - Pilot.mp4", "Should change specified files");
