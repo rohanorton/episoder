@@ -6,26 +6,31 @@ A node.js commandline utility for renaming the files of downloaded TV shows.
 This program extracts showname, season and episode infomation from a filename or
 from user flags and queries the trakt.tv api to get episode title.
 
-Currently only renames in the form `Community - S01E04 - Social Psychology.mp4`
+Currently only renames to the form `Community - S01E04 - Social Psychology.mp4`
 
 It should work as a node.js module too, but I haven't really played with it
-beyond writing tests. Exposed methods documented below.
+beyond writing tests.
 
-For example, it is able to rename the following filenames:
+For example, it is able to rename the following files (amongst others):
 
-- Community_S01E04.mp4
-- Community-1x04.mp4
-- Community.104.mp4
-- Community - Season 1 Episode 4.mp4
+```
+Community_S01E04.mp4
+Community-1x04.mp4
+Community.104.mp4
+Community - Season 1 Episode 4.mp4
+```
   
-(amongst others) to:
+to:
 
-- Community - S01E04 - Social Psychology.mp4
+```
+Community - S01E04 - Social Psychology.mp4
+```
 
 Installation
 ------------
 
 Requirements:
+- trakt.tv api key (available at http://trakt.tv/api-docs/authentication)
 - node.js
 - npm (usually installed with node.js)
 
@@ -33,13 +38,8 @@ Requirements:
 git clone https://github.com/rohanorton/episoder.git
 cd episoder/
 npm install
+echo 'module.exports = "your-trakt-api-key-goes-here";' >> config/traktApiKey.js
 sudo npm link
-```
-You will need to get your own Trakt API key from their website. And create a
-traktApiKey.js file in the config folder containing the following:
-
-```javascript
-module.exports = "your-trakt-api-key-goes-here";
 ```
 
 Eventually I'll get round to registering it as an npm module so that you can
