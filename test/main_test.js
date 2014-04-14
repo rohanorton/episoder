@@ -223,9 +223,35 @@ describe("main.js", function () {
           assert(!err, "should not error");
           assert.strictEqual(filelist[0], "Twin Peaks - S01E01 - Pilot.mkv");
           done();
-          monkey.unpatch(main.trakt);
         });
       });
+      monkey.unpatch(main.trakt);
+    });
+    it("should be able to accept show flag", function (done) {
+      var args = {
+        _: ["S01E04.mp4"],
+        show: "Community",
+        offset: 0
+      };
+
+      mock({
+        "S01E04.mp4": "An episode of Community"
+      });
+      monkey.patch(main.trakt, {
+        getTitle: function (episodeObject, callback) {
+          episodeObject.title = "Social Psychology";
+          console.log(episodeObject);
+          callback(null, episodeObject);
+        }
+      });
+      main.main(args, function () {
+        fs.readdir(".", function (err, filelist) {
+          assert(!err, "should not error");
+          assert.strictEqual(filelist[0], "Community - S01E04 - Social Psychology.mp4");
+          done();
+        });
+      });
+      monkey.unpatch(main.trakt);
     });
   });
 });
