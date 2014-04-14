@@ -5,6 +5,7 @@
 var main = require("../lib/main.js"),
   assert = require("assert"),
   fs = require("fs"),
+  monkey = require("monkey-patch"),
   mock = require("mock-fs");
 
 describe("main.js", function () {
@@ -199,6 +200,30 @@ describe("main.js", function () {
           assert.strictEqual(filelist[3], "Community - S01E04 - Social Psychology.mp4", "Should change specified files");
           assert.strictEqual(filelist[4], "community s01e04.txt", "Shouldn't change unspecified files");
           done();
+        });
+      });
+    });
+    it("should be able to offset search", function (done) {
+      var args = {
+        _: ["twin peaks - s01e00 - pilot.mkv"],
+        offset: 1
+      };
+
+      mock({
+        "twin peaks - s01e00 - pilot.mkv": "An episode of Twin Peaks"
+      });
+      monkey.patch(main.trakt, {
+        getTitle: function (episodeObject, callback) {
+          episodeObject.title = "Pilot";
+          callback(null, episodeObject);
+        }
+      });
+      main.main(args, function () {
+        fs.readdir(".", function (err, filelist) {
+          assert(!err, "should not error");
+          assert.strictEqual(filelist[0], "Twin Peaks - S01E01 - Pilot.mkv");
+          done();
+          monkey.unpatch(main.trakt);
         });
       });
     });
