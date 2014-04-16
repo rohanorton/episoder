@@ -81,10 +81,10 @@ describe("trakt.js", function () {
       assert.strictEqual(trakt.getEpisodeIndex(mockTraktArray, 4), 4, "index should be 4");
       done();
     });
-    it("should return null if no episode match", function (done) {
+    it("should return -1 if no episode match", function (done) {
       // remove episode from array
       mockTraktArray.splice(3, 1);
-      assert.strictEqual(trakt.getEpisodeIndex(mockTraktArray, 4), null);
+      assert.strictEqual(trakt.getEpisodeIndex(mockTraktArray, 4), (-1));
       done();
     });
   });
