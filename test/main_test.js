@@ -1,5 +1,5 @@
 /*jslint indent:2, node:true, nomen:true */
-/*globals describe, it */
+/*globals describe, it, beforeEach, afterEach */
 "use strict";
 
 var main = require("../lib/main.js"),
@@ -9,6 +9,17 @@ var main = require("../lib/main.js"),
   mock = require("mock-fs");
 
 describe("main.js", function () {
+  beforeEach(function () {
+    monkey.patch(main.trakt, {
+      getTitle: function (episodeObject, callback) {
+        episodeObject.title = "Testing One Two Three";
+        callback(null, episodeObject);
+      }
+    });
+  });
+  afterEach(function () {
+    monkey.unpatch(main.trakt);
+  });
   describe("getExtension()", function () {
     it("should return correct extension from filename", function (done) {
       assert.strictEqual(main.getExtension("Community S01E04.mp4"), "mp4");
@@ -129,7 +140,7 @@ describe("main.js", function () {
     it("should return replacement filename", function (done) {
       main.getReplacementFilename("community s01e04.mp4", function (err, replacementFilename) {
         assert(!err, "Should not error");
-        assert.strictEqual(replacementFilename, "Community - S01E04 - Social Psychology.mp4");
+        assert.strictEqual(replacementFilename, "Community - S01E04 - Testing One Two Three.mp4");
         done();
       });
     });
@@ -143,7 +154,7 @@ describe("main.js", function () {
       main.renameEpisodeFile("community s01e04.mp4", function () {
         fs.readdir(".", function (err, filelist) {
           assert(!err, "should not error");
-          assert.strictEqual(filelist[0], "Community - S01E04 - Social Psychology.mp4");
+          assert.strictEqual(filelist[0], "Community - S01E04 - Testing One Two Three.mp4");
           done();
         });
       });
@@ -160,31 +171,19 @@ describe("main.js", function () {
       main.renameEpisodeFile("another_dir/sub_dir/community s01e04.mp4", function () {
         fs.readdir("another_dir/sub_dir/", function (err, filelist) {
           assert(!err, "should not error");
-          assert.strictEqual(filelist[0], "Community - S01E04 - Social Psychology.mp4");
+          assert.strictEqual(filelist[0], "Community - S01E04 - Testing One Two Three.mp4");
           done();
         });
       });
     });
   });
   describe("main()", function () {
-    it("should rename file given filename", function (done) {
-      var args = { _: ["community s01e04.mp4"] };
+    beforeEach(function () {
       // create mock filesystem to test on...
       mock({
-        "community s01e04.mp4": "An episode of Community"
-      });
-      main.main(args, function () {
-        fs.readdir(".", function (err, filelist) {
-          assert(!err, "should not error");
-          assert.strictEqual(filelist[0], "Community - S01E04 - Social Psychology.mp4");
-          done();
-        });
-      });
-    });
-    it("should rename globbed files", function (done) {
-      var args = { _: ["another_dir/*mp4"] };
-      // create mock filesystem to test on...
-      mock({
+        "community s01e04.mp4": "An episode of Community",
+        "twin peaks - s01e00 - pilot.mkv": "An episode of Twin Peaks",
+        "S01E04.mp4": "An episode of an unknown show!",
         "another_dir": {
           "community s01e01.mp4": "An episode of Community",
           "community s01e02.mp4": "An episode of Community",
@@ -193,11 +192,25 @@ describe("main.js", function () {
           "community s01e04.txt": "An episode of Community"
         }
       });
+    });
+    it("should rename file given filename", function (done) {
+      var args = { _: ["community s01e04.mp4"] };
+      main.main(args, function () {
+        fs.readdir(".", function (err, filelist) {
+          assert(!err, "should not error");
+          assert.strictEqual(filelist[0], "Community - S01E04 - Testing One Two Three.mp4");
+          done();
+        });
+      });
+    });
+    it("should rename globbed files", function (done) {
+      var args = { _: ["another_dir/*mp4"] };
+      // create mock filesystem to test on...
       main.main(args, function () {
         fs.readdir("another_dir/", function (err, filelist) {
           assert(!err, "should not error");
-          assert.strictEqual(filelist[0], "Community - S01E01 - Pilot.mp4", "Should change specified files");
-          assert.strictEqual(filelist[3], "Community - S01E04 - Social Psychology.mp4", "Should change specified files");
+          assert.strictEqual(filelist[0], "Community - S01E01 - Testing One Two Three.mp4", "Should change specified files");
+          assert.strictEqual(filelist[3], "Community - S01E04 - Testing One Two Three.mp4", "Should change specified files");
           assert.strictEqual(filelist[4], "community s01e04.txt", "Shouldn't change unspecified files");
           done();
         });
@@ -208,24 +221,13 @@ describe("main.js", function () {
         _: ["twin peaks - s01e00 - pilot.mkv"],
         offset: 1
       };
-
-      mock({
-        "twin peaks - s01e00 - pilot.mkv": "An episode of Twin Peaks"
-      });
-      monkey.patch(main.trakt, {
-        getTitle: function (episodeObject, callback) {
-          episodeObject.title = "Pilot";
-          callback(null, episodeObject);
-        }
-      });
       main.main(args, function () {
         fs.readdir(".", function (err, filelist) {
           assert(!err, "should not error");
-          assert.strictEqual(filelist[0], "Twin Peaks - S01E01 - Pilot.mkv");
+          assert.strictEqual(filelist[1], "Twin Peaks - S01E01 - Testing One Two Three.mkv");
           done();
         });
       });
-      monkey.unpatch(main.trakt);
     });
     it("should be able to accept show flag", function (done) {
       var args = {
@@ -233,25 +235,15 @@ describe("main.js", function () {
         show: "Community",
         offset: 0
       };
-
-      mock({
-        "S01E04.mp4": "An episode of Community"
-      });
-      monkey.patch(main.trakt, {
-        getTitle: function (episodeObject, callback) {
-          episodeObject.title = "Social Psychology";
-          console.log(episodeObject);
-          callback(null, episodeObject);
-        }
-      });
       main.main(args, function () {
         fs.readdir(".", function (err, filelist) {
           assert(!err, "should not error");
-          assert.strictEqual(filelist[0], "Community - S01E04 - Social Psychology.mp4");
+          // I have no idea why the index of this is zero,
+          // weird.
+          assert.strictEqual(filelist[0], "Community - S01E04 - Testing One Two Three.mp4");
           done();
         });
       });
-      monkey.unpatch(main.trakt);
     });
   });
 });
