@@ -75,6 +75,22 @@ episoder --show "parks and recreation" s01e04.avi
 
 renames to `Parks and Recreation - S01E04 - Boys Club.avi`
 
+### Season flag
+The `--season` flag will set a user defined season. 
+
+```bash
+episoder --season 1 archer_2009-04.avi
+```
+
+renames to `Archer 2009 - S01E04 - Killing Utne`
+
+It will also take words:
+
+```bash
+episoder --season specials archer_2009-04.avi
+```
+
+renames to `Archer 2009 - Specials E04 - Heart of Archness: Part I.avi`
 
 ### Offset flag
 

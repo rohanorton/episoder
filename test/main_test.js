@@ -168,22 +168,10 @@ describe("main.js", function () {
     });
   });
   describe("main()", function () {
-    beforeEach(function () {
-      // create mock filesystem to test on...
-      mock({
-        "community s01e04.mp4": "An episode of Community",
-        "twin peaks - s01e00 - pilot.mkv": "An episode of Twin Peaks",
-        "S01E04.mp4": "An episode of an unknown show!",
-        "another_dir": {
-          "community s01e01.mp4": "An episode of Community",
-          "community s01e02.mp4": "An episode of Community",
-          "community s01e03.mp4": "An episode of Community",
-          "community s01e04.mp4": "An episode of Community",
-          "community s01e04.txt": "An episode of Community"
-        }
-      });
-    });
     it("should rename file given filename", function (done) {
+      mock({
+        "community s01e04.mp4": "An episode of Community"
+      });
       var args = { _: ["community s01e04.mp4"] };
       main.main(args, function () {
         fs.readdir(".", function (err, filelist) {
@@ -194,6 +182,15 @@ describe("main.js", function () {
       });
     });
     it("should rename globbed files", function (done) {
+      mock({
+        "another_dir": {
+          "community s01e01.mp4": "An episode of Community",
+          "community s01e02.mp4": "An episode of Community",
+          "community s01e03.mp4": "An episode of Community",
+          "community s01e04.mp4": "An episode of Community",
+          "community s01e04.txt": "An episode of Community"
+        }
+      });
       var args =  { _: ["another_dir/*mp4"] };
       // create mock filesystem to test on...
       main.main(args, function () {
@@ -207,6 +204,9 @@ describe("main.js", function () {
       });
     });
     it("should be able to offset search", function (done) {
+      mock({
+        "twin peaks - s01e00 - pilot.mkv": "An episode of Twin Peaks",
+      });
       var args = {
         offset: 1,
         _: ["twin peaks - s01e00 - pilot.mkv"],
@@ -214,12 +214,16 @@ describe("main.js", function () {
       main.main(args, function () {
         fs.readdir(".", function (err, filelist) {
           assert(!err, "should not error");
-          assert.strictEqual(filelist[1], "Twin Peaks - S01E01 - Testing One Two Three.mkv");
+          console.log(filelist);
+          assert.strictEqual(filelist[0], "Twin Peaks - S01E01 - Testing One Two Three.mkv");
           done();
         });
       });
     });
     it("should be able to accept show flag", function (done) {
+      mock({
+        "S01E04.mp4": "An episode of an unknown show!"
+      });
       var args = {
         _: ["S01E04.mp4"],
         show: "Community",
@@ -231,6 +235,42 @@ describe("main.js", function () {
           // I have no idea why the index of this is zero,
           // weird.
           assert.strictEqual(filelist[0], "Community - S01E04 - Testing One Two Three.mp4");
+          done();
+        });
+      });
+    });
+    it("should be able to accept season flag", function (done) {
+      mock({
+        "Community 04.mp4": "An episode of Community"
+      });
+      var args = {
+        _: ["Community 04.mp4"],
+        season: 1
+      };
+      main.main(args, function () {
+        fs.readdir(".", function (err, filelist) {
+          assert(!err, "should not error");
+          // I have no idea why the index of this is zero,
+          // weird.
+          assert.strictEqual(filelist[0], "Community - S01E04 - Testing One Two Three.mp4");
+          done();
+        });
+      });
+    });
+    it("should be able to accept season flag with words", function (done) {
+      mock({
+        "Archer 2009 04.mp4": "An episode of Archer"
+      });
+      var args = {
+        _: ["Archer 2009 04.mp4"],
+        season: "specials"
+      };
+      main.main(args, function () {
+        fs.readdir(".", function (err, filelist) {
+          assert(!err, "should not error");
+          // I have no idea why the index of this is zero,
+          // weird.
+          assert.strictEqual(filelist[0], "Archer 2009 - Specials E04 - Testing One Two Three.mp4");
           done();
         });
       });
