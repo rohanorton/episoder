@@ -5,6 +5,7 @@
 var main = require("../lib/main.js"),
   assert = require("assert"),
   fs = require("fs"),
+  monkey = require("monkey-patch"),
   mock = require("mock-fs");
 
 describe("integration", function () {

@@ -126,16 +126,6 @@ describe("main.js", function () {
       done();
     });
   });
-  describe("zPad()", function () {
-    it("should return zero padded number string for single digit numbers", function (done) {
-      assert.strictEqual(main.zPad(4), "04");
-      done();
-    });
-    it("should return number string for double digit numbers", function (done) {
-      assert.strictEqual(main.zPad(34), "34");
-      done();
-    });
-  });
   describe("getReplacementFilename()", function () {
     it("should return replacement filename", function (done) {
       main.getReplacementFilename("community s01e04.mp4", function (err, replacementFilename) {
@@ -204,7 +194,7 @@ describe("main.js", function () {
       });
     });
     it("should rename globbed files", function (done) {
-      var args = { _: ["another_dir/*mp4"] };
+      var args =  { _: ["another_dir/*mp4"] };
       // create mock filesystem to test on...
       main.main(args, function () {
         fs.readdir("another_dir/", function (err, filelist) {
@@ -218,8 +208,8 @@ describe("main.js", function () {
     });
     it("should be able to offset search", function (done) {
       var args = {
+        offset: 1,
         _: ["twin peaks - s01e00 - pilot.mkv"],
-        offset: 1
       };
       main.main(args, function () {
         fs.readdir(".", function (err, filelist) {
