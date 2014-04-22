@@ -20,20 +20,6 @@ describe("main.js", function () {
   afterEach(function () {
     monkey.unpatch(main.trakt);
   });
-  describe("getExtension()", function () {
-    it("should return correct extension from filename", function (done) {
-      assert.strictEqual(main.getExtension("Community S01E04.mp4"), "mp4");
-      done();
-    });
-    it("should return correct extension from filenames with multiple dots", function (done) {
-      assert.strictEqual(main.getExtension("Community.S01E04.mp4"), "mp4");
-      done();
-    });
-    it("should return lowercase extension", function (done) {
-      assert.strictEqual(main.getExtension("COMMUNITY S01E04.MP4"), "mp4");
-      done();
-    });
-  });
   describe("parseFilename()", function () {
     it("should return object with show in title case", function (done) {
       var result = main.parseFilename("parks and recreation S01E04.mp4");
@@ -73,10 +59,10 @@ describe("main.js", function () {
       done();
     });
     it("should return object with show, season and episode numbers from filename in 'Season # Episode ##' form", function (done) {
-      var result = main.parseFilename("Community Season 1 Episode 4.mp4");
+      var result = main.parseFilename("Community Season 1 Episode 14.mp4");
       assert.strictEqual(result.show, "Community", "show should be 'Community'");
       assert.strictEqual(result.season, 1, "season should be 1");
-      assert.strictEqual(result.episode, 4, "episode should be 4");
+      assert.strictEqual(result.episode, 14, "episode should be 14");
       assert.strictEqual(result.extension, "mp4", "extension should be mp4");
       done();
     });

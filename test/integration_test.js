@@ -5,19 +5,15 @@
 var main = require("../lib/main.js"),
   assert = require("assert"),
   fs = require("fs"),
-  monkey = require("monkey-patch"),
   mock = require("mock-fs");
 
 describe("integration", function () {
   describe("main()", function () {
-    beforeEach(function () {
-      // create mock filesystem to test on...
+    it("should rename file given filename", function (done) {
       mock({
         "community s01e04.mp4": "An episode of Community"
       });
-    });
-    it("should rename file given filename", function (done) {
-      var args = { _: ["community s01e04.mp4"] };
+      var args = { _: ["*"] };
       main.main(args, function () {
         fs.readdir(".", function (err, filelist) {
           assert(!err, "should not error");
