@@ -167,6 +167,22 @@ describe("main.js", function () {
         });
       });
     });
+    it("should rename if force flag enabled even if file already exists", function (done) {
+      // create mock filesystem to test on...
+      mock({
+        "community s01e04.mp4": "Episode to rename",
+        "Community - S01E04 - Testing One Two Three.mp4": "Oh, hey! I already exist!"
+      });
+      main.renameEpisodeFile("community s01e04.mp4", { force: true }, function (err) {
+        assert(!err, "should not error");
+        fs.readdir(".", function (err, filelist) {
+          assert(!err, "should not error");
+          assert.strictEqual(filelist[0], "Community - S01E04 - Testing One Two Three.mp4");
+          assert.strictEqual(filelist[1], undefined, "There should only be one file now");
+          done();
+        });
+      });
+    });
   });
   describe("main()", function () {
     it("should rename file given filename", function (done) {
@@ -215,7 +231,6 @@ describe("main.js", function () {
       main.main(args, function () {
         fs.readdir(".", function (err, filelist) {
           assert(!err, "should not error");
-          console.log(filelist);
           assert.strictEqual(filelist[0], "Twin Peaks - S01E01 - Testing One Two Three.mkv");
           done();
         });
