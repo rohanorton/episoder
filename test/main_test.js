@@ -152,6 +152,21 @@ describe("main.js", function () {
         });
       });
     });
+    it("shouldn't rename if file already exists", function (done) {
+      // create mock filesystem to test on...
+      mock({
+        "community s01e04.mp4": "Episode to rename",
+        "Community - S01E04 - Testing One Two Three.mp4": "Oh, hey! I already exist!"
+      });
+      main.renameEpisodeFile("community s01e04.mp4", function (err) {
+        assert(err, "should error");
+        fs.readdir(".", function (err, filelist) {
+          assert(!err, "should not error");
+          assert.strictEqual(filelist[1], "community s01e04.mp4", "Filename should not have changed");
+          done();
+        });
+      });
+    });
   });
   describe("main()", function () {
     it("should rename file given filename", function (done) {
