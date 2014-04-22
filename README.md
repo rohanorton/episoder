@@ -102,8 +102,20 @@ is the case we can pass an offset value to correct the output.
 Set episode offset:
 
 ```bash
-episoder --offset 1 twin_peaks-1x00-pilot.mkv
+episoder --offset=1 twin_peaks-1x00-pilot.mkv
 ```
 
 Renames to `Twin Peaks - S01E01 - Pilot.mkv`.
 
+Note that although it works for positive numbers without the equality symbol, it
+won't work for negative numbers, so it is advised to always use `--offset=`
+syntax to prevent weirdness.
+
+### Force flag
+
+The default behaviour of episoder is to avoid overwriting files. If you really
+want to overwrite your files, use the `--force` flag:
+
+```bash
+episoder --force community-s01e04.mp4
+```
