@@ -1,7 +1,7 @@
 {
   "name": "episoder",
   "description": "Application for renaming downloaded tv show files",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "author": "Rohan Orton <rohan.orton@gmail.com>",
   "main": "lib/main.js",
   "bin": {
@@ -25,6 +25,7 @@
     "async": "0.7.x",
     "yargs": "1.2.x",
     "array.prototype.findindex": "0.1.x",
-    "sanitize-filename": "1.0.x"
+    "sanitize-filename": "1.0.x",
+    "keypress": "^0.2.1"
   }
 }

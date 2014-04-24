@@ -114,7 +114,7 @@ describe("main.js", function () {
   });
   describe("getReplacementFilename()", function () {
     it("should return replacement filename", function (done) {
-      main.getReplacementFilename("community s01e04.mp4", function (err, replacementFilename) {
+      main.getReplacementFilename("community s01e04.mp4", {}, function (err, replacementFilename) {
         assert(!err, "Should not error");
         assert.strictEqual(replacementFilename, "Community - S01E04 - Testing One Two Three.mp4");
         done();
@@ -127,7 +127,7 @@ describe("main.js", function () {
       mock({
         "community s01e04.mp4": "An episode of Community"
       });
-      main.renameEpisodeFile("community s01e04.mp4", function () {
+      main.renameEpisodeFile("community s01e04.mp4", {}, function () {
         fs.readdir(".", function (err, filelist) {
           assert(!err, "should not error");
           assert.strictEqual(filelist[0], "Community - S01E04 - Testing One Two Three.mp4");
@@ -144,7 +144,7 @@ describe("main.js", function () {
           }
         }
       });
-      main.renameEpisodeFile("another_dir/sub_dir/community s01e04.mp4", function () {
+      main.renameEpisodeFile("another_dir/sub_dir/community s01e04.mp4", {}, function () {
         fs.readdir("another_dir/sub_dir/", function (err, filelist) {
           assert(!err, "should not error");
           assert.strictEqual(filelist[0], "Community - S01E04 - Testing One Two Three.mp4");
@@ -158,7 +158,7 @@ describe("main.js", function () {
         "community s01e04.mp4": "Episode to rename",
         "Community - S01E04 - Testing One Two Three.mp4": "Oh, hey! I already exist!"
       });
-      main.renameEpisodeFile("community s01e04.mp4", function (err) {
+      main.renameEpisodeFile("community s01e04.mp4", {}, function (err) {
         assert(err, "should error");
         fs.readdir(".", function (err, filelist) {
           assert(!err, "should not error");
