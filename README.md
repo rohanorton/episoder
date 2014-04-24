@@ -42,9 +42,12 @@ sudo npm link
 episoder --save_api_key 'your-trakt-api-key-goes-here'
 ```
 
-Eventually I'll get round to registering it as an npm module so that you can
-simply install it through that, but until then this method of installation will
-have to suffice
+or, simply:
+
+```bash
+sudo npm install -g episoder
+episoder --save_api_key 'your-trakt-api-key-goes-here'
+```
 
 Usage
 -----

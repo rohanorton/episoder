@@ -12,7 +12,7 @@
     "test": "npm run-script lint && mocha -R spec",
     "lint": "jslint lib/* test/*"
   },
-  "private": true,
+  "private": false,
   "devDependencies": {
     "mock-fs": "^2.2.0",
     "jslint": "^0.3.3",
