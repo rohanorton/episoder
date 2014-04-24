@@ -64,8 +64,8 @@ episoder *
 ```
 
 ### Show flag
-The `--show` flag will set a user defined show. If multiple words, please use
-quotation as per the example
+The `--show` or `-S` flag will set a user defined show. If multiple words,
+please use quotation as per the example
 
 Set custom showname:
 
@@ -76,7 +76,7 @@ episoder --show "parks and recreation" s01e04.avi
 renames to `Parks and Recreation - S01E04 - Boys Club.avi`
 
 ### Season flag
-The `--season` flag will set a user defined season. 
+The `--season` or `-s` flag will set a user defined season. 
 
 ```bash
 episoder --season 1 archer_2009-04.avi
@@ -91,6 +91,23 @@ episoder --season specials archer_2009-04.avi
 ```
 
 renames to `Archer 2009 - Specials E04 - Heart of Archness: Part I.avi`
+
+It will also take words:
+
+```bash
+episoder --season specials archer_2009-04.avi
+```
+
+renames to `Archer 2009 - Specials E04 - Heart of Archness: Part I.avi`
+
+### Episode flag
+The `--episode` or `-e` flag will set a user defined episode. 
+
+```bash
+episoder --episode 4 bobs_burgers_s01e99.mp4
+```
+
+renames to `Bobs Burgers - S01E04 - Sexy Dance Fighting`
 
 ### Offset flag
 
@@ -114,8 +131,9 @@ syntax to prevent weirdness.
 ### Force flag
 
 The default behaviour of episoder is to avoid overwriting files. If you really
-want to overwrite your files, use the `--force` flag:
+want to overwrite your files, use the `--force` or `-f` flag:
 
 ```bash
 episoder --force community-s01e04.mp4
 ```
+

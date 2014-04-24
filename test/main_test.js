@@ -273,6 +273,24 @@ describe("main.js", function () {
         });
       });
     });
+    it("should be able to accept episode flag", function (done) {
+      mock({
+        "Community 100.mp4": "An episode of Community"
+      });
+      var args = {
+        _: ["*"],
+        episode: 4
+      };
+      main.main(args, function () {
+        fs.readdir(".", function (err, filelist) {
+          assert(!err, "should not error");
+          // I have no idea why the index of this is zero,
+          // weird.
+          assert.strictEqual(filelist[0], "Community - S01E04 - Testing One Two Three.mp4");
+          done();
+        });
+      });
+    });
     it("should be able to accept season flag with words", function (done) {
       mock({
         "Archer 2009 04.mp4": "An episode of Archer"
