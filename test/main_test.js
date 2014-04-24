@@ -106,6 +106,14 @@ describe("main.js", function () {
       assert.strictEqual(result.extension, ".mp4", "extension should be '.mp4'");
       done();
     });
+    it("should return object with show, season and episode numbers from filename with trailing characters after showname", function (done) {
+      var result = main.parseFilename("no-name.mp4", {show: "Parks and Recreation", episode: 4, season: 1});
+      assert.strictEqual(result.show, "Parks and Recreation", "show should be 'Parks and Recreation'");
+      assert.strictEqual(result.season, 1, "season should be 1");
+      assert.strictEqual(result.episode, 4, "episode should be 4");
+      assert.strictEqual(result.extension, ".mp4", "extension should be '.mp4'");
+      done();
+    });
     it("should return null when filename doesn't match any patterns", function (done) {
       var result = main.parseFilename("this-is-a-really-useless-file-dontcha-think");
       assert.strictEqual(result, null);
