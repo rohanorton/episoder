@@ -38,8 +38,8 @@ Requirements:
 git clone https://github.com/rohanorton/episoder.git
 cd episoder/
 npm install
-echo 'module.exports = "your-trakt-api-key-goes-here";' >> config/traktApiKey.js
 sudo npm link
+episoder --save_api_key 'your-trakt-api-key-goes-here'
 ```
 
 Eventually I'll get round to registering it as an npm module so that you can
@@ -136,4 +136,22 @@ want to overwrite your files, use the `--force` or `-f` flag:
 ```bash
 episoder --force community-s01e04.mp4
 ```
+### Save api key flag
 
+In order to use the app you will need a trakt api key, available from
+http://trakt.tv/api-docs/authentication. You can easily save it to the config
+file in the following way.
+
+```bash
+episoder --save_api_key "api-key-goes-here"
+```
+
+All this does is create a file in the module's directory called
+`config/traktApiKey.js` with the following code:
+
+```javascript
+module.exports = "api-key-goes-here";
+```
+
+Using the `--save_api_key` flag will clobber any existing file in this spot, so
+please use with care.
