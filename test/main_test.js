@@ -31,7 +31,7 @@ describe("main.js", function () {
       assert.strictEqual(result.show, "Community", "show should be 'Community'");
       assert.strictEqual(result.season, 1, "season should be 1");
       assert.strictEqual(result.episode, 4, "episode should be 4");
-      assert.strictEqual(result.extension, "mp4", "extension should be mp4");
+      assert.strictEqual(result.extension, ".mp4", "extension should be '.mp4'");
       done();
     });
     it("should return object with show, season and episode numbers from filename in s##e## form", function (done) {
@@ -39,7 +39,7 @@ describe("main.js", function () {
       assert.strictEqual(result.show, "Community", "show should be 'Community'");
       assert.strictEqual(result.season, 1, "season should be 1");
       assert.strictEqual(result.episode, 4, "episode should be 4");
-      assert.strictEqual(result.extension, "mp4", "extension should be mp4");
+      assert.strictEqual(result.extension, ".mp4", "extension should be '.mp4'");
       done();
     });
     it("should return object with show, season and episode numbers from filename in #x## form", function (done) {
@@ -47,7 +47,7 @@ describe("main.js", function () {
       assert.strictEqual(result.show, "Community", "show should be 'Community'");
       assert.strictEqual(result.season, 1, "season should be 1");
       assert.strictEqual(result.episode, 4, "episode should be 4");
-      assert.strictEqual(result.extension, "mp4", "extension should be mp4");
+      assert.strictEqual(result.extension, ".mp4", "extension should be '.mp4'");
       done();
     });
     it("should return object with show, season and episode numbers from filename in #-## form", function (done) {
@@ -55,7 +55,7 @@ describe("main.js", function () {
       assert.strictEqual(result.show, "Community", "show should be 'Community'");
       assert.strictEqual(result.season, 1, "season should be 1");
       assert.strictEqual(result.episode, 4, "episode should be 4");
-      assert.strictEqual(result.extension, "mp4", "extension should be mp4");
+      assert.strictEqual(result.extension, ".mp4", "extension should be '.mp4'");
       done();
     });
     it("should return object with show, season and episode numbers from filename in 'Season # Episode ##' form", function (done) {
@@ -63,7 +63,7 @@ describe("main.js", function () {
       assert.strictEqual(result.show, "Community", "show should be 'Community'");
       assert.strictEqual(result.season, 1, "season should be 1");
       assert.strictEqual(result.episode, 14, "episode should be 14");
-      assert.strictEqual(result.extension, "mp4", "extension should be mp4");
+      assert.strictEqual(result.extension, ".mp4", "extension should be '.mp4'");
       done();
     });
     it("should return object with show, season and episode numbers from filename in ### form", function (done) {
@@ -71,7 +71,7 @@ describe("main.js", function () {
       assert.strictEqual(result.show, "Community", "show should be 'Community'");
       assert.strictEqual(result.season, 1, "season should be 1");
       assert.strictEqual(result.episode, 4, "episode should be 4");
-      assert.strictEqual(result.extension, "mp4", "extension should be mp4");
+      assert.strictEqual(result.extension, ".mp4", "extension should be '.mp4'");
       done();
     });
     it("should return object with show, season and episode numbers from filename seperated by dots", function (done) {
@@ -79,7 +79,7 @@ describe("main.js", function () {
       assert.strictEqual(result.show, "Parks and Recreation", "show should be 'Parks and Recreation'");
       assert.strictEqual(result.season, 1, "season should be 1");
       assert.strictEqual(result.episode, 4, "episode should be 4");
-      assert.strictEqual(result.extension, "mp4", "extension should be mp4");
+      assert.strictEqual(result.extension, ".mp4", "extension should be '.mp4'");
       done();
     });
     it("should return object with show, season and episode numbers even if there are numbers in the showname", function (done) {
@@ -87,7 +87,7 @@ describe("main.js", function () {
       assert.strictEqual(result.show, "30 Rock", "show should be '30 Rock'");
       assert.strictEqual(result.season, 1, "season should be 1");
       assert.strictEqual(result.episode, 4, "episode should be 4");
-      assert.strictEqual(result.extension, "mp4", "extension should be mp4");
+      assert.strictEqual(result.extension, ".mp4", "extension should be '.mp4'");
       done();
     });
     it("should return object with show, season and episode numbers from filename with lots of trailing info", function (done) {
@@ -95,7 +95,7 @@ describe("main.js", function () {
       assert.strictEqual(result.show, "Parks and Recreation", "show should be 'Parks and Recreation'");
       assert.strictEqual(result.season, 1, "season should be 1");
       assert.strictEqual(result.episode, 4, "episode should be 4");
-      assert.strictEqual(result.extension, "mp4", "extension should be mp4");
+      assert.strictEqual(result.extension, ".mp4", "extension should be '.mp4'");
       done();
     });
     it("should return object with show, season and episode numbers from filename with trailing characters after showname", function (done) {
@@ -103,7 +103,7 @@ describe("main.js", function () {
       assert.strictEqual(result.show, "Parks and Recreation", "show should be 'Parks and Recreation'");
       assert.strictEqual(result.season, 1, "season should be 1");
       assert.strictEqual(result.episode, 4, "episode should be 4");
-      assert.strictEqual(result.extension, "mp4", "extension should be mp4");
+      assert.strictEqual(result.extension, ".mp4", "extension should be '.mp4'");
       done();
     });
     it("should return null when filename doesn't match any patterns", function (done) {
