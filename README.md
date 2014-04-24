@@ -46,7 +46,7 @@ or, simply:
 
 ```bash
 sudo npm install -g episoder
-episoder --save_api_key 'your-trakt-api-key-goes-here'
+sudo episoder --save_api_key 'your-trakt-api-key-goes-here'
 ```
 
 Usage
