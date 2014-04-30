@@ -23,7 +23,6 @@
     "array.prototype.findindex": "^0.1.1",
     "sanitize-filename": "^1.0.1",
     "yargs": "^1.2.1",
-    "glob": "^3.2.9",
     "to-title-case": "^0.1.4",
     "async": "^0.7.0"
   }

@@ -206,28 +206,6 @@ describe("main.js", function () {
         });
       });
     });
-    it("should rename globbed files", function (done) {
-      mock({
-        "another_dir": {
-          "community s01e01.mp4": "An episode of Community",
-          "community s01e02.mp4": "An episode of Community",
-          "community s01e03.mp4": "An episode of Community",
-          "community s01e04.mp4": "An episode of Community",
-          "community s01e04.txt": "An episode of Community"
-        }
-      });
-      var args =  { _: ["another_dir/*mp4"] };
-      // create mock filesystem to test on...
-      main.main(args, function () {
-        fs.readdir("another_dir/", function (err, filelist) {
-          assert(!err, "should not error");
-          assert.strictEqual(filelist[0], "Community - S01E01 - Testing One Two Three.mp4", "Should change specified files");
-          assert.strictEqual(filelist[3], "Community - S01E04 - Testing One Two Three.mp4", "Should change specified files");
-          assert.strictEqual(filelist[4], "community s01e04.txt", "Shouldn't change unspecified files");
-          done();
-        });
-      });
-    });
     it("should be able to offset search", function (done) {
       mock({
         "twin peaks - s01e00 - pilot.mkv": "An episode of Twin Peaks",
@@ -286,7 +264,7 @@ describe("main.js", function () {
         "Community 100.mp4": "An episode of Community"
       });
       var args = {
-        _: ["*"],
+        _: ["Community 100.mp4"],
         episode: 4
       };
       main.main(args, function () {

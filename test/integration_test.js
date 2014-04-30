@@ -13,7 +13,7 @@ describe("integration", function () {
       mock({
         "community s01e04.mp4": "An episode of Community"
       });
-      var args = { _: ["*"] };
+      var args = { _: ["community s01e04.mp4"] };
       main.main(args, function () {
         fs.readdir(".", function (err, filelist) {
           assert(!err, "should not error");
