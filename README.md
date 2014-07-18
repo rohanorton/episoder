@@ -35,16 +35,6 @@ Requirements:
 - npm (usually installed with node.js)
 
 ```bash
-git clone https://github.com/rohanorton/episoder.git
-cd episoder/
-npm install
-sudo npm link
-episoder --save_api_key 'your-trakt-api-key-goes-here'
-```
-
-or, simply:
-
-```bash
 sudo npm install -g episoder
 sudo episoder --save_api_key 'your-trakt-api-key-goes-here'
 ```
