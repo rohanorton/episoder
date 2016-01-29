@@ -1,5 +1,5 @@
 import path from 'path';
-import { map, pick, any, trim, isUndefined, defaults } from 'lodash';
+import { map, pick, some as any, trim, isUndefined, defaults } from 'lodash';
 import XRegExp from 'xregexp';
 import titleCase from 'to-title-case';
 
