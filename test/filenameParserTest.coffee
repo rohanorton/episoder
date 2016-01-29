@@ -1,5 +1,5 @@
 assert = require('assert')
-parseFilename = require('../lib/filenameParser').default
+parseFilename = require('../src/filenameParser').default
 
 describe 'parseFilename', ->
 

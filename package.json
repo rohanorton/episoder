@@ -9,9 +9,10 @@
   },
   "preferGlobal": true,
   "scripts": {
+    "compile": "./node_modules/babel-cli/bin/babel.js -d lib src/",
     "test": "mocha -R spec  --compilers coffee:coffee-script/register,js:babel-core/register",
     "test:watch": "npm test -s -- -w",
-    "lint": "eslint lib/* test/*"
+    "lint": "eslint src/* test/*"
   },
   "private": true,
   "devDependencies": {
