@@ -62,6 +62,18 @@ describe 'filenameParser', ->
         expected = { season: 1, episode: 4, show: 'Parks and Recreation', extension: '.mp4', filename: filename }
         assert.deepEqual(actual, expected)
 
+    it "parses filename seperated by dashes", ->
+        filename = "Parks-And-Recreation-S01E04.mp4"
+        actual = filenameParser(filename)
+        expected = { season: 1, episode: 4, show: 'Parks and Recreation', extension: '.mp4', filename: filename }
+        assert.deepEqual(actual, expected)
+
+    it "parses filename seperated by underscores", ->
+        filename = "Parks_And_Recreation_S01E04.mp4"
+        actual = filenameParser(filename)
+        expected = { season: 1, episode: 4, show: 'Parks and Recreation', extension: '.mp4', filename: filename }
+        assert.deepEqual(actual, expected)
+
     it "parses filename with numbers in the showname", ->
         filename = "30 Rock S01E04.mp4"
         actual = filenameParser(filename)
