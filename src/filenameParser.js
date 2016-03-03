@@ -1,5 +1,5 @@
 import path from 'path';
-import { map, pick, some as any, trim, isUndefined, defaults } from 'lodash';
+import { _, partial, flow, each, map, pick, trim, defaults, toNumber, isNil, isNaN, isEqual } from 'lodash';
 import XRegExp from 'xregexp';
 import titleCase from 'to-title-case';
 
@@ -43,31 +43,39 @@ let parseString = (filename) => {
     }
 }
 
-let stripHangingChars = (str) =>
-    trim(str, ['-', '.', ' ']);
+let stripHangingChars =
+    partial(trim, _, ['-', '.', ' ', '_', '~']);
 
-let formatTitle = (title) =>
-    titleCase(stripHangingChars(title))
+let formatTitle =
+    flow(stripHangingChars, titleCase);
+
+let isEmptyString =
+    partial(isEqual, '');
+
+let validateResult = (props) =>
+    // each returns the argument it was passed
+    each(props, (val, key) => {
+        const { filename } = props;
+        if (isNaN(val) || isNil(val) || isEmptyString(val)) {
+            throw new Error(`Unable to parse filename: ${filename}. Could not find ${key}.`);
+        }
+    });
 
 let parseFilename = (filename, options = {}) => {
     const extension = path.extname(filename).toLowerCase();
     const parsed = parseString(filename, options);
     let { show, season, episode } = defaults(options, parsed);
 
-    if (any([ show, season, episode ], isUndefined)) {
-        throw new Error(`Unable to parse filename: ${filename}`);
-    }
-
     show = formatTitle(show);
-    [ episode, season ] = map([ episode, season ], Number);
+    [ episode, season ] = map([ episode, season ], toNumber);
 
-    return {
+    return validateResult({
         filename,
         extension,
         show,
         episode,
         season
-    };
+    });
 };
 
 export default parseFilename;

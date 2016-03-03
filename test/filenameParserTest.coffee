@@ -44,6 +44,18 @@ describe 'filenameParser', ->
         expected = { season: 1, episode: 4, show: 'Community', extension: '.mp4', filename: filename }
         assert.deepEqual(actual, expected)
 
+    it "allows 0 for episode", ->
+        filename = "community s01e00.mp4"
+        actual = filenameParser(filename)
+        expected = { season: 1, episode: 0, show: 'Community', extension: '.mp4', filename: filename }
+        assert.deepEqual(actual, expected)
+
+    it "allows 0 for season", ->
+        filename = "community s00e04.mp4"
+        actual = filenameParser(filename)
+        expected = { season: 0, episode: 4, show: 'Community', extension: '.mp4', filename: filename }
+        assert.deepEqual(actual, expected)
+
     it "parses filename seperated by dots", ->
         filename = "Parks.And.Recreation.S01E04.mp4"
         actual = filenameParser(filename)
@@ -62,8 +74,38 @@ describe 'filenameParser', ->
         expected = { season: 1, episode: 4, show: 'Parks and Recreation', extension: '.mp4', filename: filename }
         assert.deepEqual(actual, expected)
 
-    it "parses filename with trailing characters after showname", ->
-        filename = "Parks and Recreation - S01E04.mp4"
+    it "parses filename with trailing spaces after showname", ->
+        filename = "Parks and Recreation   S01E04.mp4"
+        actual = filenameParser(filename)
+        expected = { season: 1, episode: 4, show: 'Parks and Recreation', extension: '.mp4', filename: filename }
+        assert.deepEqual(actual, expected)
+
+    it "parses filename with trailing tildas after showname", ->
+        filename = "Parks and Recreation~~~S01E04.mp4"
+        actual = filenameParser(filename)
+        expected = { season: 1, episode: 4, show: 'Parks and Recreation', extension: '.mp4', filename: filename }
+        assert.deepEqual(actual, expected)
+
+    it "parses filename with trailing underscores after showname", ->
+        filename = "Parks and Recreation___S01E04.mp4"
+        actual = filenameParser(filename)
+        expected = { season: 1, episode: 4, show: 'Parks and Recreation', extension: '.mp4', filename: filename }
+        assert.deepEqual(actual, expected)
+
+    it "parses filename with trailing hyphens after showname", ->
+        filename = "Parks and Recreation---S01E04.mp4"
+        actual = filenameParser(filename)
+        expected = { season: 1, episode: 4, show: 'Parks and Recreation', extension: '.mp4', filename: filename }
+        assert.deepEqual(actual, expected)
+
+    it "parses filename with trailing dots after showname", ->
+        filename = "Parks and Recreation... S01E04.mp4"
+        actual = filenameParser(filename)
+        expected = { season: 1, episode: 4, show: 'Parks and Recreation', extension: '.mp4', filename: filename }
+        assert.deepEqual(actual, expected)
+
+    it "parses filename with mix of trailing characters after showname", ->
+        filename = "Parks and Recreation-~._ S01E04.mp4"
         actual = filenameParser(filename)
         expected = { season: 1, episode: 4, show: 'Parks and Recreation', extension: '.mp4', filename: filename }
         assert.deepEqual(actual, expected)
@@ -92,4 +134,9 @@ describe 'filenameParser', ->
     it "throws error if parsing fails", ->
         filename = "this-is-a-really-useless-file-dontcha-think"
         fn = -> filenameParser(filename)
-        assert.throws(fn, 'Unable to parse file')
+        assert.throws(fn, /Unable to parse file/)
+
+    it "throws error if show is empty string", ->
+        filename = "s01e03.mp4"
+        fn = -> filenameParser(filename)
+        assert.throws(fn, /Unable to parse file/)
