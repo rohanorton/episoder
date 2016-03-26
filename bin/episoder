@@ -7,7 +7,7 @@ var dns = require('dns');
 batchFileRenamer({
     pre: function (callback) {
         // check network connectivity:
-        dns.resolve('http://www.google.com', callback);
+        dns.lookup('api-v2launch.trakt.tv', callback);
     },
     rule: episoder,
     cliOptions: {
