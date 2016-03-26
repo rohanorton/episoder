@@ -9,6 +9,9 @@ batchFileRenamer({
         // check network connectivity:
         dns.lookup('api-v2launch.trakt.tv', callback);
     },
+    errorMessages: {
+        ENOTFOUND: 'Episoder requires a network connection. Please check yours and try again'
+    },
     rule: episoder,
     cliOptions: {
         options: {
