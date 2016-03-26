@@ -143,6 +143,12 @@ describe 'filenameParser', ->
         expected = { season: 1, episode: 4, show: 'Parks and Recreation', extension: '.mp4', filename: filename }
         assert.deepEqual(actual, expected)
 
+    it "parses filename in directory", ->
+        filename = "downloads/parks and recreation s01e04.mp4"
+        actual = filenameParser(filename)
+        expected = { season: 1, episode: 4, show: 'Parks and Recreation', extension: '.mp4', filename: filename }
+        assert.deepEqual(actual, expected)
+
     it "throws error if parsing fails", ->
         filename = "this-is-a-really-useless-file-dontcha-think"
         fn = -> filenameParser(filename)

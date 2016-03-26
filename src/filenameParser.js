@@ -63,7 +63,8 @@ let validateResult = (props) =>
 
 let parseFilename = (filename, options = {}) => {
     const extension = path.extname(filename).toLowerCase();
-    const parsed = parseString(filename, options);
+    const basename = path.basename(filename);
+    const parsed = parseString(basename, options);
     let { show, season, episode } = defaults(options, parsed);
 
     show = formatTitle(show);
