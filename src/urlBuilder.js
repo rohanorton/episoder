@@ -7,6 +7,4 @@ function urlBuilder({ show, season, episode }) {
     return `${host}/shows/${show}/seasons/${season}/episodes/${episode}`;
 }
 
-
 export default urlBuilder;
-

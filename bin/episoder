@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+
+var batchFileRenamer = require('batch-file-renamer');
+var episoder = require('..');
+var dns = require('dns');
+
+batchFileRenamer({
+    pre: function (callback) {
+        // check network connectivity:
+        dns.resolve('http://www.google.com', callback);
+    },
+    rule: episoder,
+    cliOptions: {
+        options: {
+            show: { alias: 'S', description: 'Provide show name', type: 'string' },
+            season: { alias: 's', description: 'Provide season number', type: 'number' },
+            episode: { alias: 'e', description: 'Provide episode number', type: 'number' }
+        }
+    }
+});

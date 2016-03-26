@@ -25,7 +25,11 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.7.4",
+    "batch-file-renamer": "^0.1.1",
+    "got": "^6.2.0",
     "lodash": "^4.1.0",
+    "node-persist": "0.0.11",
+    "sanitize-filename": "^1.5.3",
     "to-title-case": "^0.1.5",
     "xregexp": "^3.0.0"
   }
