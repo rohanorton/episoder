@@ -10,10 +10,15 @@ const episoder = async (filename, options) => {
         logger.log(`Ignoring '${filename}'`)
         return null;
     }
-    const parsed = filenameParser(filename, options);
-    const data = await api.get(parsed);
-    const showInfo = defaults(data, parsed);
-    const newname = template(showInfo);
+    let newname = null;
+    try {
+        const parsed = filenameParser(filename, options);
+        const data = await api.get(parsed);
+        const showInfo = defaults(data, parsed);
+        newname = template(showInfo);
+    } catch (err) {
+        logger.error(err.message);
+    }
     return newname;
 }
 
