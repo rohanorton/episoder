@@ -4,7 +4,7 @@ Episoder
 A node.js commandline utility for renaming the files of downloaded TV shows.
 
 Parses filenames of video files for relevent information and queries the
-[Trakt](www.trakt.tv) API to find episode title to construct the new filename
+[Trakt](https://trakt.tv) API to find episode title to construct the new filename
 and renames.
 
 Installation
