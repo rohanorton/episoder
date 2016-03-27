@@ -65,7 +65,7 @@ let parseFilename = (filename, options = {}) => {
     const extension = path.extname(filename).toLowerCase();
     const basename = path.basename(filename);
     const parsed = parseString(basename, options);
-    let { show, season, episode } = defaults(options, parsed);
+    let { show, season, episode } = Object.assign({}, parsed, options);
 
     show = formatTitle(show);
     [ episode, season ] = map([ episode, season ], toNumber);
