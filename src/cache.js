@@ -1,10 +1,11 @@
 import fs from 'fs-extra';
 import path from 'path';
+import os from 'os';
 
-const getUserHome = () =>
-    process.env.HOME || process.env.USERPROFILE;
+const isWindows = os.platform() === 'win32';
+const dot = isWindows ? '_' : '.';
 
-const storeLocation = path.join(getUserHome(), '.episoder', 'cache');
+const storeLocation = path.join(os.homedir(), `${dot}episoder`, 'cache');
 let store = {};
 
 try {
