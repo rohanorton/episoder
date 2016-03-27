@@ -10,6 +10,7 @@
   "preferGlobal": true,
   "scripts": {
     "compile": "./node_modules/babel-cli/bin/babel.js -d lib src/",
+    "prepublish": "npm run compile",
     "test": "mocha -R spec  --compilers coffee:coffee-script/register,js:babel-core/register",
     "test:watch": "npm test -s -- -w",
     "lint": "eslint src/* test/*"
