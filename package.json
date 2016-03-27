@@ -1,7 +1,7 @@
 {
   "name": "episoder",
   "description": "Application for renaming downloaded tv show files",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Rohan Orton <rohan.orton@gmail.com>",
   "main": "index.js",
   "bin": {
